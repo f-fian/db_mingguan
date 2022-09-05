@@ -1,6 +1,5 @@
 import { Order,OrderDetail,Employee,MenuList,MenuType,sequelize } from "./model/model.js";
 
-
 async function db_delete(){
 
     await OrderDetail.drop()

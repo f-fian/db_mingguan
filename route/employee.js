@@ -28,7 +28,6 @@ export const employee_sign_up = async (req,res)=>{
 
 export const employee_login = async (req,res)=>{
 
-
     // const user = users.find((data)=> data.name == req.body.name)
     console.log(req.body.name)
 
@@ -40,8 +39,6 @@ export const employee_login = async (req,res)=>{
         where:find_data
     })
 
-
-    
     let employee = {
         name:user.dataValues.name,
         employee_id:user.dataValues.id
@@ -65,8 +62,6 @@ export const employee_login = async (req,res)=>{
         res.status(500).send("internal server error. proses bcrypt salah ")
     }
 
-    
-    
     const accesToken = jwt.sign(employee,"123456789")
 
     res.status(200)

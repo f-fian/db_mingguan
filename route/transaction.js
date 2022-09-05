@@ -33,7 +33,7 @@ export function authenticateToken(req,res,next){
 
 export const transaksi = (req,res)=>{
 
-    sequelize.sync().then(async ()=>{
+    sequelize.sync({alter:true}).then(async ()=>{
            // make transaction 
 
             Employee.hasMany(Order,{
@@ -54,7 +54,9 @@ export const transaksi = (req,res)=>{
 
             console.log(req.employee_id)
 
-            let order_number = getOrderNumber()
+            let order_number_body = req.body.order_number
+
+            let order_number = getOrderNumber(order_number_body)
             let sum_price = req.body.quantity * req.body.unit_price
             const t = await sequelize.transaction();
 
@@ -63,10 +65,9 @@ export const transaksi = (req,res)=>{
             console.log("sampe sini")
 
             const data_order = await Order.create({
-                id:req.body.id,
                 order_number:order_number,
                 table_number:req.body.table_number,
-                total_price:req.body.total_price,
+                total_price:sum_price,
                 employee_id:req.employee_id
 
             }, { transaction: t });
